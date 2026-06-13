@@ -2,6 +2,8 @@ import streamlit as st
 import pickle
 import pandas as pd
 import requests
+import os
+import gdown
 
 def fetch_poster(movie_id):
     try:
@@ -41,7 +43,9 @@ def recommend(movie):
 
 movie_list = pickle.load(open('movies.pkl','rb'))
 movies = pd.DataFrame(movie_list)
-
+if not os.path.exists("similarity.pkl"):
+    url = "https://drive.google.com/uc?id=10c30iWO8x_9aeLGVefwH-dCzHu_iCDSu"
+    gdown.download(url, "similarity.pkl", quiet=False)
 similarity = pickle.load(open('similarity.pkl','rb'))
 
 st.title('Movie Recommender System')
